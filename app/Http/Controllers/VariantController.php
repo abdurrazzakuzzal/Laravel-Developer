@@ -52,6 +52,7 @@ class VariantController extends Controller
     public function show(Variant $variant)
     {
         //
+        
     }
 
     /**
