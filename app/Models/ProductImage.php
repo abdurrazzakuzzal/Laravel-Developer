@@ -7,4 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 class ProductImage extends Model
 {
     //
+    protected $table = 'product_images';
+
+    protected $fillable = [
+        'product_id', 'file_path', 'thumbnail'
+    ];
+
+    public function products()
+    {
+        return $this->hasMany('App\Models\Product','id', 'product_id');
+    }
 }

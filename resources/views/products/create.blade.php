@@ -4,6 +4,9 @@
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">Create Product</h1>
     </div>
+    @if(Session::has('success'))
+    <p class="alert alert-success">{{ Session::get('success') }}</p>
+    @endif
     <div id="app">
         <section>
             <form method="POST" action="{{ route('create.product') }}" enctype="multipart/form-data">
@@ -15,11 +18,11 @@
 
                                 <div class="form-group">
                                     <label for="">Product Name</label>
-                                    <input type="text" name="product_name" placeholder="Product Name" class="form-control">
+                                    <input type="text" name="product_name" placeholder="Product Name" class="form-control" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="">Product SKU</label>
-                                    <input type="text" name="product_sku" placeholder="Product SKU" class="form-control">
+                                    <input type="text" name="product_sku" placeholder="Product SKU" class="form-control" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="">Description</label>
@@ -32,6 +35,9 @@
                         <div class="card shadow mb-4">
                             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                                 <h6 class="m-0 font-weight-bold text-primary">Media</h6>
+                                <div class="form-group">
+                                    <input type="file" name="image" class="form-control-file" id="exampleFormControlFile1" required>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -43,29 +49,40 @@
                             </div>
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col-md-4">
+                                    <div class="col-md-12">
                                         <div class="form-group">
-                                            <label for="">Option</label>
-                                            <select class="form-control" name="variant">
-                                                @foreach($variants as $variant)
-                                                <option value="{{ $variant->title }}">
-                                                    {{ $variant->title }}
-                                                </option>
+                                            <label for="variant">Variant one</label>
+                                            <select name="variantid" id="" class="form-control">
+                                                <option value="">Select variant</option>
+                                                @foreach ($variants as $variant)
+                                                    <option value="{{ $variant->id }}">{{ $variant->title }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-md-8">
+                                    <div class="col-md-12">
                                         <div class="form-group">
-                                            <label class="float-right text-primary" style="cursor: pointer;">Remove</label>
-                                            <label>.</label>
-                                            <input-tag class="form-control"></input-tag>
+                                            <label for="">Variant two</label>
+                                            <select name="variantid2" id="" class="form-control">
+                                                <option value="">Select variant</option>
+                                                @foreach ($variants as $variant)
+                                                    <option value="{{ $variant->id }}">{{ $variant->title }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="">Variant three</label>
+                                            <select name="variantid3" id="" class="form-control">
+                                                <option value="">Select variant</option>
+                                                @foreach ($variants as $variant)
+                                                    <option value="{{ $variant->id }}">{{ $variant->title }}</option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="card-footer">
-                                <button class="btn btn-primary">Add another option</button>
                             </div>
 
                             <div class="card-header text-uppercase">Preview</div>
@@ -74,28 +91,19 @@
                                     <table class="table">
                                         <thead>
                                             <tr>
-                                                <td>Variant</td>
                                                 <td>Price</td>
                                                 <td>Stock</td>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach($variants as $variant)
-                                            <tr>
-                                                <td>
-                                                    {{ $variant->title}}
-                                                    <input type="hidden" class="form-control" name="product_variant_one" value="{{ $variant->id}}">
-                                                    <input type="hidden" class="form-control" name="variant" value="{{ $variant->title}}">
-                                                </td>
-                                                
-                                                <td>
-                                                    <input type="text" class="form-control" name="price">
-                                                </td>
-                                                <td>
-                                                    <input type="text" class="form-control" name="stock">
-                                                </td>
-                                            </tr>
-                                            @endforeach
+                                                <tr>
+                                                    <td>
+                                                        <input type="text" class="form-control" name="price" required>
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" class="form-control" name="stock" required>
+                                                    </td>
+                                                </tr>
                                         </tbody>
                                     </table>
                                 </div>
@@ -110,3 +118,10 @@
         </section>
     </div>
 @endsection
+
+
+@section('page-script')
+<script type="text/javascript">
+	$('#mySelect2').select2('destroy');
+</script>
+@stop
